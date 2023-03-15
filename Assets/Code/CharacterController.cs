@@ -13,17 +13,17 @@ public class CharacterController : MonoBehaviour // объявление скр�
 	private Rigidbody2D rb; //  рб = компонент риджет бади
 	public static int cherch;
 	private Vector2 moveVector; //б приватная переменная вектор 2д moveVector 
-	private bool cortan;// бул накортанах
 	private bool run;// бул бег
-	private bool jump;// бул прыжок
 	public static float ypos;// открытая переменная  Y  позиция
-	public static int jumpP; // открытая переменная прыжок
+	public static float xpos;// открытая переменная  X  позиция
 	private bool isobject; // бул есть объект
 	private bool isHome;// бул есть дом
 	private bool isHome2;// бул есть дом(с улицы)
 	private bool isCherch;// бул есть церковь
 	private bool isCherch2;// бул есть церковь(с улицы)
 	private bool isUl;// бул есть улицы
+	private bool isDed;//бул есть дед
+	private bool kat_end_1;//конец кат сцены
 	public Transform CheckPos;// объект проверка позиции
 	public float CheckRadius;// публичная переменная проверочный радиус 
 	public LayerMask whatIsTable;// слой что есть стол, печь
@@ -32,14 +32,18 @@ public class CharacterController : MonoBehaviour // объявление скр�
 	public LayerMask whatIsUl; // слой что есть выход из дом 
 	public LayerMask whatIsCherch; // слой что есть выход из церкви 
 	public LayerMask whatIsCherch2; // слой что есть вход в церковь 
+	public LayerMask whatIsDed;// слой деда
     private bool oneComeinCherch;
 	public PlayableDirector director;
-	public bool pod;
+	private bool pod;
+	private bool dialog;
+	
      void Start()// начало программы
     {
 		if(Dialog.whatDialog == 1)
 		{
 			pod = true;
+			dialog = true;
 		}
 		anim = GetComponent<Animator>();// амин = аниматор
 		rb = GetComponent<Rigidbody2D>();// рб = риджет бади
@@ -52,46 +56,53 @@ public class CharacterController : MonoBehaviour // объявление скр�
     }
 	private void FixedUpdate()// постоянный покадровый цикл
 	{
-		if( pod == true)
+		
+		if(Dialog.whatDialog == 0)
+		{
+			dialog = false;
+		}
+		if(pod == true)
 		{
 			StartCoroutine(Pod());
 			IEnumerator Pod() 
 		{
+			pod = false;
 			anim.StopPlayback();
 			anim.Play("lesgit"); 
 			yield return  new WaitForSeconds(3.38f);
-			pod = false;
+			
 		}
 		}
-		if (jump == true && isobject == true) // если прыжок правда и есть объект(стол или печь)
+		
+		else{ // иначе
+			if(TimeLine.DialogDed != 1)
 		{
-			moveVector.x = 0f; // прекратить передвижение по оси x
+			moveVector.x = Input.GetAxis("Horizontal");// движение по горизонтали на клавиатуре = движ по x
 		}
-		else{ // иначе 
-		moveVector.x = Input.GetAxis("Horizontal");// движение по горизонтали на клавиатуре = движ по x
 		}
-		if( isobject == false){
-		moveVector.y = Input.GetAxis("Vertical");
+		if(dialog == false && isobject == false && TimeLine.DialogDed != 1)
+		{
+			moveVector.y = Input.GetAxis("Vertical");
 		}
 		else{moveVector.y = 0f;}
-		if(facingRight == false && moveVector.x > 0 )
+		if(dialog == false &&facingRight == false && moveVector.x > 0 )
 			{
 				Flip();
 				
 			}
-			else if(facingRight == true && moveVector.x < 0   )
+			else if(dialog == false && facingRight == true && moveVector.x < 0)
 			{
 				Flip();
 				
 			}
-			if(cortan == false && run == false && jump == false)
+			if(dialog == false && run == false )
 			{
 				rb.velocity = new Vector2(moveVector.x * speed, moveVector.y * speed);
 			}
-			if(cortan == false && run == false && jump == false)
+			if(dialog == false && run == false )
 		{
 		
-			if(moveVector.x == 0f && moveVector.y == 0f && pod == false)
+			if(moveVector.x == 0f && moveVector.y == 0f)
 			{
 				anim.StopPlayback();
 				anim.Play("IDLE"); 
@@ -103,12 +114,12 @@ public class CharacterController : MonoBehaviour // объявление скр�
 				anim.Play("Walk");
 			}
 		}
-		 else if(cortan == true && run == false && jump == false)
+		 else if(dialog == false  && run == false)
 		{
 			
 			rb.velocity = new Vector2(moveVector.x * speed * 0.6f, moveVector.y * speed * 0.6f);
 		
-		if(moveVector.x == 0f && moveVector.y == 0f)
+		if(dialog == false && moveVector.x == 0f && moveVector.y == 0f )
 		{
 			
 			anim.StopPlayback();
@@ -159,34 +170,26 @@ public class CharacterController : MonoBehaviour // объявление скр�
 		isCherch = Physics2D.OverlapCircle(CheckPos.position,CheckRadius,whatIsCherch);
 		isCherch2 = Physics2D.OverlapCircle(CheckPos.position,CheckRadius,whatIsCherch2);
 		isUl = Physics2D.OverlapCircle(CheckPos.position,CheckRadius,whatIsUl);
+		isDed = Physics2D.OverlapCircle(CheckPos.position,CheckRadius,whatIsDed);
 		ypos = transform.position.y;
-		if(run == true && (moveVector.x > 0f || moveVector.x < 0f || moveVector.y > 0f || moveVector.y < 0f) )
+		xpos = transform.position.x;
+		if(dialog == false && run == true && (moveVector.x > 0f || moveVector.x < 0f || moveVector.y > 0f || moveVector.y < 0f))
 		{
 			anim.StopPlayback();
 			anim.Play("Run");
 			rb.velocity = new Vector2(moveVector.x * speed * 1.6f, moveVector.y * speed * 1.6f);
 		}
-		else if(moveVector.x == 0f && moveVector.y == 0f && cortan == false && pod == false)
+		else if(moveVector.x == 0f && moveVector.y == 0f && dialog == false && pod == false)
 			{
 				anim.StopPlayback();
 				anim.Play("IDLE"); 
 			}
-		if(Input.GetKey(KeyCode.LeftControl))
-		{
-			cortan = true;
-		}
-		else {cortan = false;}
-		if(Input.GetKey(KeyCode.LeftShift) && jump == false)
+		
+		if(Input.GetKey(KeyCode.LeftShift)  && dialog == false && Input.GetAxis("Horizontal") != 0f)
 		{
 			run = true;
 		}
 		else {run = false;}
-		if(Input.GetKeyDown(KeyCode.Space)&& jump == false && isobject == false && ypos < -2.29f)   
-		{
-			run = false;
-			jump = true;
-			StartCoroutine(Jump());
-		}
        if(isHome2 == true)// если на улице подошёл к дому
 	   {
 		  StartCoroutine(ComeIn());
@@ -211,40 +214,21 @@ public class CharacterController : MonoBehaviour // объявление скр�
 		  TimeLine.quithome = 1;
 		  cherch = 2;
 	   }
+	   if(isDed == true)
+	   {
+		   Dialog.whatDialog = 2;
+	   }
     }
 	void Flip()
 	{
-		facingRight = !facingRight;
-		Vector3 Scaler = transform.localScale;
-		Scaler.x *= -1;
-		transform.localScale = Scaler;
-	}
-	IEnumerator Jump()
+		if(TimeLine.DialogDed != 1)
 		{
-			if(jump == true){
-			jumpP = 1;	
-			GetComponent<BoxCollider2D>().enabled = false;
-			if(isHome == false)
-			{
-				rb.velocity = new Vector2(moveVector.x * speed *1.5f,3f);
-			}
-			else{rb.velocity = new Vector2(0f,3f);}
-			anim.StopPlayback();
-			anim.Play("Jump");
-			yield return  new WaitForSeconds(0.25f);
-			if(isHome == false)
-			{
-				rb.velocity = new Vector2(moveVector.x * speed *1.5f,-3f);
-			}
-			else{rb.velocity = new Vector2(0f,-3f);}
-	
-			yield return  new WaitForSeconds(0.25f);
-			GetComponent<BoxCollider2D>().enabled = true;
-			jumpP = 0;
-			jump = false;
-			}
-	
-		
+			facingRight = !facingRight;
+			Vector3 Scaler = transform.localScale;
+			Scaler.x *= -1;
+			transform.localScale = Scaler;
 		}
+	}
+	
 }
 

@@ -58,10 +58,10 @@
      <Compile Include="Assets\Code\Hourse.cs" />
      <Compile Include="Assets\Code\Paralax.cs" />
      <Compile Include="Assets\Code\table.cs" />
-     <Compile Include="Assets\Code\Text.cs" />
-     <Compile Include="Assets\Code\TextDialog.cs" />
+     <Compile Include="Assets\Code\TextDialo.cs" />
      <Compile Include="Assets\Code\TimeLine.cs" />
      <Compile Include="Assets\Code\VideoText.cs" />
+     <Compile Include="Assets\Stena.cs" />
  <Reference Include="Cinemachine">
  <HintPath>D:/6Булат/игры/My project (1)/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
  </Reference>

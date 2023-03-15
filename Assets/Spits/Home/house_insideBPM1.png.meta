@@ -1,13 +1,21 @@
 fileFormatVersion: 2
 guid: e7850ddc3b9418e4fb28d9a51650c7fe
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: house_insideBPM1_0
-    21300002: house_insideBPM1_1
-    21300004: house_insideBPM1_2
-    21300006: house_insideBPM1_3
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: house_insideBPM1_0
+  - first:
+      213: 21300002
+    second: house_insideBPM1_1
+  - first:
+      213: 21300004
+    second: house_insideBPM1_2
+  - first:
+      213: 21300006
+    second: house_insideBPM1_3
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -27,6 +35,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -35,9 +45,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -58,11 +68,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -73,6 +87,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -92,6 +107,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a4c97b9bdd471ca4fa59b870a7f0c2d4
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -112,6 +128,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 279637c57ec2e3941881fda6d42e37a0
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -132,6 +149,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 50462c8ac40c98e42aca6dc70aa8a5b4
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -152,6 +170,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4d1ff52f782d7b24e92e7002f4810a1a
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -160,10 +179,17 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: e60f0ad1b7a9b7c49b0723d8425825a9
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      house_insideBPM1_0: 21300000
+      house_insideBPM1_2: 21300004
+      house_insideBPM1_3: 21300006
+      house_insideBPM1_1: 21300002
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

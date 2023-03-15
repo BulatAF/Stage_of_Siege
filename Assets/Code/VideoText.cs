@@ -22,7 +22,7 @@ public class VideoText : MonoBehaviour
 
     IEnumerator ComeIn() 
 	{
-		yield return  new WaitForSeconds(38f);
+		yield return  new WaitForSeconds(42f);
 		SceneManager.LoadScene(1);
 	}
 	IEnumerator PasNo() 
